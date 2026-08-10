@@ -1,0 +1,17 @@
+pandas
+numpy
+scipy
+statsmodels
+matplotlib
+seaborn
+jupyter
+pytest
+pyyaml
+openai
+groq
+ollama
+ibm-watsonx-ai
+pydantic
+python-dotenv
+tenacity
+rich

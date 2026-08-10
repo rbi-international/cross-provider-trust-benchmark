@@ -1,0 +1,24 @@
+experiment_name: cross_provider_trust_benchmark
+seed: 42
+
+providers:
+  - name: openai
+    model: PLACEHOLDER_MODEL_NAME
+  - name: groq
+    model: PLACEHOLDER_MODEL_NAME
+  - name: ollama
+    model: PLACEHOLDER_MODEL_NAME
+  - name: watsonx
+    model: PLACEHOLDER_MODEL_NAME
+
+task_categories:
+  - category_a_codegen
+  - category_b_tool_orchestration
+  - category_c_error_recovery
+  - category_d_ambiguous
+
+runs_per_task_provider: 5
+
+logging:
+  trajectory_log: true
+  provenance_log: true

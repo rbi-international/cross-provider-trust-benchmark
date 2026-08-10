@@ -1,0 +1,16 @@
+# secrets
+.env
+*.key
+
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# experiment outputs (generated, not source, keep repo light)
+experiments/runs/*
+!experiments/runs/.gitkeep
+
+# os
+.DS_Store

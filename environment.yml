@@ -1,0 +1,24 @@
+name: agentic-trust-bench
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pandas
+  - numpy
+  - scipy
+  - statsmodels
+  - matplotlib
+  - seaborn
+  - jupyter
+  - pytest
+  - pyyaml
+  - pip:
+      - openai
+      - groq
+      - ollama
+      - ibm-watsonx-ai
+      - pydantic
+      - python-dotenv
+      - tenacity
+      - rich
