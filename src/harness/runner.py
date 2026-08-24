@@ -123,6 +123,8 @@ def run_single(provider_name, model_name, task, run_idx, judge_llm, seed):
             "run_idx": run_idx,
             "passed": passed,
             "reason": reason,
+            "protocol_adherence": trajectory.get("protocol_adherence"),
+            "phantom_tool_call_count": len(trajectory.get("phantom_tool_calls", [])),
             "elapsed_seconds": round(elapsed, 2),
             "error": error,
         }
@@ -130,7 +132,8 @@ def run_single(provider_name, model_name, task, run_idx, judge_llm, seed):
             json.dump(result, f, indent=2)
 
         status = "PASS" if passed else "FAIL"
-        print(f"  [{status}] {provider_name:10s} {task['task_id']:8s} run{run_idx}  ({elapsed:.1f}s)  {reason[:80]}")
+        adherence_flag = "" if trajectory.get("protocol_adherence", True) else "  [PROTOCOL BREAK]"
+        print(f"  [{status}] {provider_name:10s} {task['task_id']:8s} run{run_idx}  ({elapsed:.1f}s)  {reason[:80]}{adherence_flag}")
         return result
 
     finally:

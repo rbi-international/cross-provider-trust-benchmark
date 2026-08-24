@@ -111,10 +111,26 @@ def test_state_check_exec_stdout():
         shutil.rmtree(tmp)
 
 
+def test_phantom_tool_call_detector():
+    from src.harness.trajectory_logger import _detect_phantom_tool_call
+
+    hallucinated = _detect_phantom_tool_call('{"name": "solution", "parameters": {"filename": "solution.py"}}')
+    assert hallucinated is not None and hallucinated["known_tool"] is False
+
+    real_but_textual = _detect_phantom_tool_call('{"name":"run_python","parameters":{"code":"print(1)"}}')
+    assert real_but_textual is not None and real_but_textual["known_tool"] is True
+
+    legit = _detect_phantom_tool_call("The average is 77.20, written to average_result.txt.")
+    assert legit is None
+
+    print("  phantom_tool_call_detector: hallucinated + real-but-textual + no-false-positive all correct")
+
+
 if __name__ == "__main__":
     test_unit_test_codegen_pass_and_fail()
     test_unit_test_error_recovery()
     test_state_check_substring_and_order()
     test_state_check_json_equality()
     test_state_check_exec_stdout()
+    test_phantom_tool_call_detector()
     print("\nALL SCORING CHECKS PASSED")
