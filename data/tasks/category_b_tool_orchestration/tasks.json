@@ -1,0 +1,102 @@
+[
+  {
+    "task_id": "B-001",
+    "category": "tool_orchestration",
+    "difficulty": "medium",
+    "prompt": "Read scores.txt (one integer per line), compute the average, and write the result rounded to 2 decimal places to average_result.txt.",
+    "tools_available": ["read_file", "run_python", "write_file"],
+    "setup": {"files": {"scores.txt": "72\n85\n90\n61\n78\n"}},
+    "pass_criteria": {"type": "state_check", "detail": "average_result.txt exists and contains '77.20'"},
+    "source": "hand-authored"
+  },
+  {
+    "task_id": "B-002",
+    "category": "tool_orchestration",
+    "difficulty": "medium",
+    "prompt": "Read rates.json which maps currency codes to USD exchange rates. Convert 100 USD to EUR and write only the numeric result to converted.txt.",
+    "tools_available": ["read_file", "calculator", "write_file"],
+    "setup": {"files": {"rates.json": "{\"EUR\": 0.92, \"GBP\": 0.79, \"JPY\": 149.5}"}},
+    "pass_criteria": {"type": "state_check", "detail": "converted.txt exists and contains '92.0' or '92'"},
+    "source": "hand-authored"
+  },
+  {
+    "task_id": "B-003",
+    "category": "tool_orchestration",
+    "difficulty": "medium",
+    "prompt": "Read numbers.txt (comma-separated integers), remove all negative numbers, sort the rest ascending, and write the result comma-separated to sorted_output.txt.",
+    "tools_available": ["read_file", "run_python", "write_file"],
+    "setup": {"files": {"numbers.txt": "5,-2,9,-8,1,0,3"}},
+    "pass_criteria": {"type": "state_check", "detail": "sorted_output.txt contains '0,1,3,5,9'"},
+    "source": "hand-authored"
+  },
+  {
+    "task_id": "B-004",
+    "category": "tool_orchestration",
+    "difficulty": "hard",
+    "prompt": "Read config.json. Validate that it contains the keys 'host', 'port', and 'timeout'. Write a report to validation_report.txt listing any missing keys, or 'VALID' if none are missing.",
+    "tools_available": ["read_file", "run_python", "write_file"],
+    "setup": {"files": {"config.json": "{\"host\": \"localhost\", \"timeout\": 30}"}},
+    "pass_criteria": {"type": "state_check", "detail": "validation_report.txt lists 'port' as missing"},
+    "source": "hand-authored"
+  },
+  {
+    "task_id": "B-005",
+    "category": "tool_orchestration",
+    "difficulty": "medium",
+    "prompt": "Read words_a.txt and words_b.txt (one word per line each). Find words that appear in both files and write them, one per line, sorted alphabetically, to common_words.txt.",
+    "tools_available": ["read_file", "run_python", "write_file"],
+    "setup": {"files": {"words_a.txt": "apple\nbanana\ncherry\ndate", "words_b.txt": "banana\ndate\nfig\ngrape"}},
+    "pass_criteria": {"type": "state_check", "detail": "common_words.txt contains 'banana' and 'date', in that alphabetical order"},
+    "source": "hand-authored"
+  },
+  {
+    "task_id": "B-006",
+    "category": "tool_orchestration",
+    "difficulty": "hard",
+    "prompt": "Read sales.csv (columns: product,quantity,price). Compute total revenue per product (quantity * price, summed for repeated products) and write a summary to revenue_summary.txt, one line per product as 'product: total'.",
+    "tools_available": ["read_file", "run_python", "write_file"],
+    "setup": {"files": {"sales.csv": "product,quantity,price\nwidget,3,10\ngadget,2,25\nwidget,1,10\n"}},
+    "pass_criteria": {"type": "state_check", "detail": "revenue_summary.txt contains 'widget: 40' and 'gadget: 50'"},
+    "source": "hand-authored"
+  },
+  {
+    "task_id": "B-007",
+    "category": "tool_orchestration",
+    "difficulty": "easy",
+    "prompt": "Read temperature.txt containing a single Celsius value. Convert it to Fahrenheit and write only the numeric result to fahrenheit_result.txt.",
+    "tools_available": ["read_file", "calculator", "write_file"],
+    "setup": {"files": {"temperature.txt": "25"}},
+    "pass_criteria": {"type": "state_check", "detail": "fahrenheit_result.txt contains '77'"},
+    "source": "hand-authored"
+  },
+  {
+    "task_id": "B-008",
+    "category": "tool_orchestration",
+    "difficulty": "hard",
+    "prompt": "Read inventory.json (list of items with 'name' and 'stock'). Write low_stock.txt listing names of all items with stock below 10, one per line, sorted by stock ascending.",
+    "tools_available": ["read_file", "run_python", "write_file"],
+    "setup": {"files": {"inventory.json": "[{\"name\": \"bolt\", \"stock\": 5}, {\"name\": \"screw\", \"stock\": 15}, {\"name\": \"nail\", \"stock\": 2}]"}},
+    "pass_criteria": {"type": "state_check", "detail": "low_stock.txt lists 'nail' before 'bolt', excludes 'screw'"},
+    "source": "hand-authored"
+  },
+  {
+    "task_id": "B-009",
+    "category": "tool_orchestration",
+    "difficulty": "medium",
+    "prompt": "Read log.txt (one log line per entry, each starting with ERROR, WARN, or INFO). Count occurrences of each level and write counts to log_summary.txt as 'LEVEL: count' lines.",
+    "tools_available": ["read_file", "run_python", "write_file"],
+    "setup": {"files": {"log.txt": "INFO started\nERROR failed to connect\nWARN low memory\nERROR timeout\nINFO done"}},
+    "pass_criteria": {"type": "state_check", "detail": "log_summary.txt contains 'ERROR: 2', 'WARN: 1', 'INFO: 2'"},
+    "source": "hand-authored"
+  },
+  {
+    "task_id": "B-010",
+    "category": "tool_orchestration",
+    "difficulty": "hard",
+    "prompt": "Read students.json (list of {name, scores: [list of ints]}). Compute each student's average score, then write rankings.txt listing students from highest to lowest average as 'rank. name: average'.",
+    "tools_available": ["read_file", "run_python", "write_file"],
+    "setup": {"files": {"students.json": "[{\"name\": \"Asha\", \"scores\": [80, 90]}, {\"name\": \"Ravi\", \"scores\": [60, 70]}]"}},
+    "pass_criteria": {"type": "state_check", "detail": "rankings.txt lists Asha as rank 1 (average 85), Ravi as rank 2 (average 65)"},
+    "source": "hand-authored"
+  }
+]

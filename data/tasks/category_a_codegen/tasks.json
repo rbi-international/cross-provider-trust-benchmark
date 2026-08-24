@@ -1,0 +1,635 @@
+[
+  {
+    "task_id": "A-111",
+    "category": "codegen",
+    "difficulty": "easy",
+    "prompt": "Write a function to find the common elements in given nested lists.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert set(common_in_nested_lists([[12, 18, 23, 25, 45], [7, 12, 18, 24, 28], [1, 5, 8, 12, 15, 16, 18]]))==set([18, 12])",
+        "assert set(common_in_nested_lists([[12, 5, 23, 25, 45], [7, 11, 5, 23, 28], [1, 5, 8, 18, 23, 16]]))==set([5,23])",
+        "assert set(common_in_nested_lists([[2, 3,4, 1], [4, 5], [6,4, 8],[4, 5], [6, 8,4]]))==set([4])"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:111"
+  },
+  {
+    "task_id": "A-120",
+    "category": "codegen",
+    "difficulty": "easy",
+    "prompt": "Write a function to find the maximum absolute product between numbers in pairs of tuples within a given list.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert max_product_tuple([(2, 7), (2, 6), (1, 8), (4, 9)] )==36",
+        "assert max_product_tuple([(10,20), (15,2), (5,10)] )==200",
+        "assert max_product_tuple([(11,44), (10,15), (20,5), (12, 9)] )==484"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:120"
+  },
+  {
+    "task_id": "A-133",
+    "category": "codegen",
+    "difficulty": "easy",
+    "prompt": "Write a function to calculate the sum of the negative numbers of a given list of numbers.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert sum_negativenum([2, 4, -6, -9, 11, -12, 14, -5, 17])==-32",
+        "assert sum_negativenum([10,15,-14,13,-18,12,-20])==-52",
+        "assert sum_negativenum([19, -65, 57, 39, 152,-639, 121, 44, 90, -190])==-894"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:133"
+  },
+  {
+    "task_id": "A-19",
+    "category": "codegen",
+    "difficulty": "easy",
+    "prompt": "Write a function to find whether a given array of integers contains any duplicate element.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert test_duplicate(([1,2,3,4,5]))==False",
+        "assert test_duplicate(([1,2,3,4, 4]))==True",
+        "assert test_duplicate([1,1,2,2,3,3,4,4,5])==True"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:19"
+  },
+  {
+    "task_id": "A-234",
+    "category": "codegen",
+    "difficulty": "easy",
+    "prompt": "Write a function to find the volume of a cube given its side length.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert volume_cube(3)==27",
+        "assert volume_cube(2)==8",
+        "assert volume_cube(5)==125"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:234"
+  },
+  {
+    "task_id": "A-391",
+    "category": "codegen",
+    "difficulty": "easy",
+    "prompt": "Write a function to convert more than one list to nested dictionary.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"],[\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"] ,[85, 98, 89, 92])==[{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}, {'S004': {'Saim Richards': 92}}]",
+        "assert convert_list_dictionary([\"abc\",\"def\",\"ghi\",\"jkl\"],[\"python\",\"program\",\"language\",\"programs\"],[100,200,300,400])==[{'abc':{'python':100}},{'def':{'program':200}},{'ghi':{'language':300}},{'jkl':{'programs':400}}]",
+        "assert convert_list_dictionary([\"A1\",\"A2\",\"A3\",\"A4\"],[\"java\",\"C\",\"C++\",\"DBMS\"],[10,20,30,40])==[{'A1':{'java':10}},{'A2':{'C':20}},{'A3':{'C++':30}},{'A4':{'DBMS':40}}]"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:391"
+  },
+  {
+    "task_id": "A-411",
+    "category": "codegen",
+    "difficulty": "easy",
+    "prompt": "Write a function to convert the given snake case string to camel case string.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert snake_to_camel('android_tv') == 'AndroidTv'",
+        "assert snake_to_camel('google_pixel') == 'GooglePixel'",
+        "assert snake_to_camel('apple_watch') == 'AppleWatch'"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:411"
+  },
+  {
+    "task_id": "A-433",
+    "category": "codegen",
+    "difficulty": "easy",
+    "prompt": "Write a function to check whether the entered number is greater than the elements of the given array.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert check_greater([1, 2, 3, 4, 5], 4) == False",
+        "assert check_greater([2, 3, 4, 5, 6], 8) == True",
+        "assert check_greater([9, 7, 4, 8, 6, 1], 11) == True"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:433"
+  },
+  {
+    "task_id": "A-610",
+    "category": "codegen",
+    "difficulty": "easy",
+    "prompt": "Write a python function which takes a list and returns a list with the same elements, but the k'th element removed.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert remove_kth_element([1,1,2,3,4,4,5,1],3)==[1, 1, 3, 4, 4, 5, 1]",
+        "assert remove_kth_element([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4],4)==[0, 0, 1, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]",
+        "assert remove_kth_element([10, 10, 15, 19, 18, 18, 17, 26, 26, 17, 18, 10],5)==[10,10,15,19, 18, 17, 26, 26, 17, 18, 10]"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:610"
+  },
+  {
+    "task_id": "A-792",
+    "category": "codegen",
+    "difficulty": "easy",
+    "prompt": "Write a python function to count the number of lists in a given number of lists.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert count_list([[1, 3], [5, 7], [9, 11], [13, 15, 17]]) == 4",
+        "assert count_list([[1,2],[2,3],[4,5]]) == 3",
+        "assert count_list([[1,0],[2,0]]) == 2"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:792"
+  },
+  {
+    "task_id": "A-143",
+    "category": "codegen",
+    "difficulty": "medium",
+    "prompt": "Write a function to find number of lists present in the given tuple.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert find_lists(([1, 2, 3, 4], [5, 6, 7, 8])) == 2",
+        "assert find_lists(([1, 2], [3, 4], [5, 6]))  == 3",
+        "assert find_lists(([9, 8, 7, 6, 5, 4, 3, 2, 1])) == 1"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:143"
+  },
+  {
+    "task_id": "A-300",
+    "category": "codegen",
+    "difficulty": "medium",
+    "prompt": "Write a function to find the count of all binary sequences of length 2n such that sum of first n bits is same as sum of last n bits.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert math.isclose(count_binary_seq(1), 2.0, rel_tol=0.001)",
+        "assert math.isclose(count_binary_seq(2), 6.0, rel_tol=0.001)",
+        "assert math.isclose(count_binary_seq(3), 20.0, rel_tol=0.001)"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:300"
+  },
+  {
+    "task_id": "A-309",
+    "category": "codegen",
+    "difficulty": "medium",
+    "prompt": "Write a python function to find the maximum of two numbers.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert maximum(5,10) == 10",
+        "assert maximum(-1,-2) == -1",
+        "assert maximum(9,7) == 9"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:309"
+  },
+  {
+    "task_id": "A-399",
+    "category": "codegen",
+    "difficulty": "medium",
+    "prompt": "Write a function to perform the mathematical bitwise xor operation across the given tuples.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert bitwise_xor((10, 4, 6, 9), (5, 2, 3, 3)) == (15, 6, 5, 10)",
+        "assert bitwise_xor((11, 5, 7, 10), (6, 3, 4, 4)) == (13, 6, 3, 14)",
+        "assert bitwise_xor((12, 6, 8, 11), (7, 4, 5, 6)) == (11, 2, 13, 13)"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:399"
+  },
+  {
+    "task_id": "A-640",
+    "category": "codegen",
+    "difficulty": "medium",
+    "prompt": "Write a function to remove the parenthesis and what is inbetween them from a string.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert remove_parenthesis([\"python (chrome)\"])==(\"python\")",
+        "assert remove_parenthesis([\"string(.abc)\"])==(\"string\")",
+        "assert remove_parenthesis([\"alpha(num)\"])==(\"alpha\")"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:640"
+  },
+  {
+    "task_id": "A-780",
+    "category": "codegen",
+    "difficulty": "medium",
+    "prompt": "Write a function to find the combinations of sums with tuples in the given tuple list. https://www.geeksforgeeks.org/python-combinations-of-sum-with-tuples-in-tuple-list/",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]",
+        "assert find_combinations([(3, 5), (7, 8), (6, 2), (7, 11)]) == [(10, 13), (9, 7), (10, 16), (13, 10), (14, 19), (13, 13)]",
+        "assert find_combinations([(4, 6), (8, 9), (7, 3), (8, 12)]) == [(12, 15), (11, 9), (12, 18), (15, 12), (16, 21), (15, 15)]"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:780"
+  },
+  {
+    "task_id": "A-801",
+    "category": "codegen",
+    "difficulty": "medium",
+    "prompt": "Write a python function to count the number of equal numbers from three given integers.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert test_three_equal(1,1,1) == 3",
+        "assert test_three_equal(-1,-2,-3) == 0",
+        "assert test_three_equal(1,2,2) == 2"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:801"
+  },
+  {
+    "task_id": "A-85",
+    "category": "codegen",
+    "difficulty": "medium",
+    "prompt": "Write a function to find the surface area of a sphere.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)",
+        "assert math.isclose(surfacearea_sphere(15), 2827.4333882308138, rel_tol=0.001)",
+        "assert math.isclose(surfacearea_sphere(20), 5026.548245743669, rel_tol=0.001)"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:85"
+  },
+  {
+    "task_id": "A-87",
+    "category": "codegen",
+    "difficulty": "medium",
+    "prompt": "Write a function to merge three dictionaries into a single dictionary.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert merge_dictionaries_three({ \"R\": \"Red\", \"B\": \"Black\", \"P\": \"Pink\" }, { \"G\": \"Green\", \"W\": \"White\" },{ \"O\": \"Orange\", \"W\": \"White\", \"B\": \"Black\" })=={'B': 'Black', 'R': 'Red', 'P': 'Pink', 'G': 'Green', 'W': 'White', 'O': 'Orange'}",
+        "assert merge_dictionaries_three({ \"R\": \"Red\", \"B\": \"Black\", \"P\": \"Pink\" }, { \"G\": \"Green\", \"W\": \"White\" },{\"L\":\"lavender\",\"B\":\"Blue\"})=={'W': 'White', 'P': 'Pink', 'B': 'Black', 'R': 'Red', 'G': 'Green', 'L': 'lavender'}",
+        "assert merge_dictionaries_three({ \"R\": \"Red\", \"B\": \"Black\", \"P\": \"Pink\" },{\"L\":\"lavender\",\"B\":\"Blue\"},{ \"G\": \"Green\", \"W\": \"White\" })=={'B': 'Black', 'P': 'Pink', 'R': 'Red', 'G': 'Green', 'L': 'lavender', 'W': 'White'}"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:87"
+  },
+  {
+    "task_id": "A-88",
+    "category": "codegen",
+    "difficulty": "medium",
+    "prompt": "Write a function to get the frequency of all the elements in a list, returned as a dictionary.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert freq_count([10,10,10,10,20,20,20,20,40,40,50,50,30])==({10: 4, 20: 4, 40: 2, 50: 2, 30: 1})",
+        "assert freq_count([1,2,3,4,3,2,4,1,3,1,4])==({1:3, 2:2,3:3,4:3})",
+        "assert freq_count([5,6,7,4,9,10,4,5,6,7,9,5])==({10:1,5:3,6:2,7:2,4:2,9:2})"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:88"
+  },
+  {
+    "task_id": "A-166",
+    "category": "codegen",
+    "difficulty": "hard",
+    "prompt": "Write a function that counts the number of pairs of integers in a list that xor to an even number.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert find_even_pair([5, 4, 7, 2, 1]) == 4",
+        "assert find_even_pair([7, 2, 8, 1, 0, 5, 11]) == 9",
+        "assert find_even_pair([1, 2, 3]) == 1"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:166"
+  },
+  {
+    "task_id": "A-167",
+    "category": "codegen",
+    "difficulty": "hard",
+    "prompt": "Write a python function to find the smallest power of 2 greater than or equal to n.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert next_power_of_2(0) == 1",
+        "assert next_power_of_2(5) == 8",
+        "assert next_power_of_2(17) == 32"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:167"
+  },
+  {
+    "task_id": "A-270",
+    "category": "codegen",
+    "difficulty": "hard",
+    "prompt": "Write a python function to find the sum of even numbers at even positions of a list.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert sum_even_and_even_index([5, 6, 12, 1, 18, 8]) == 30",
+        "assert sum_even_and_even_index([3, 20, 17, 9, 2, 10, 18, 13, 6, 18]) == 26",
+        "assert sum_even_and_even_index([5, 6, 12, 1]) == 12"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:270"
+  },
+  {
+    "task_id": "A-280",
+    "category": "codegen",
+    "difficulty": "hard",
+    "prompt": "Write a function that takes in an array and element and returns a tuple containing a boolean that indicates if the element is in the array and the index position of the element (or -1 if the element is not found).",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert sequential_search([11,23,58,31,56,77,43,12,65,19],31) == (True, 3)",
+        "assert sequential_search([12, 32, 45, 62, 35, 47, 44, 61],61) == (True, 7)",
+        "assert sequential_search([9, 10, 17, 19, 22, 39, 48, 56],48) == (True, 6)"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:280"
+  },
+  {
+    "task_id": "A-396",
+    "category": "codegen",
+    "difficulty": "hard",
+    "prompt": "Write a function to check whether the given string starts and ends with the same character or not.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert check_char(\"abba\") == \"Valid\"",
+        "assert check_char(\"a\") == \"Valid\"",
+        "assert check_char(\"abcd\") == \"Invalid\""
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:396"
+  },
+  {
+    "task_id": "A-453",
+    "category": "codegen",
+    "difficulty": "hard",
+    "prompt": "Write a python function to find the sum of even factors of a number.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert sumofFactors(18) == 26",
+        "assert sumofFactors(30) == 48",
+        "assert sumofFactors(6) == 8"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:453"
+  },
+  {
+    "task_id": "A-454",
+    "category": "codegen",
+    "difficulty": "hard",
+    "prompt": "Write a function that matches a word containing 'z'.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert text_match_wordz(\"pythonz.\")==True",
+        "assert text_match_wordz(\"xyz.\")==True",
+        "assert text_match_wordz(\"  lang  .\")==False"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:454"
+  },
+  {
+    "task_id": "A-6",
+    "category": "codegen",
+    "difficulty": "hard",
+    "prompt": "Write a python function to check whether the two numbers differ at one bit position only or not.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert differ_At_One_Bit_Pos(13,9) == True",
+        "assert differ_At_One_Bit_Pos(15,8) == False",
+        "assert differ_At_One_Bit_Pos(2,4) == False",
+        "assert differ_At_One_Bit_Pos(2, 3) == True",
+        "assert differ_At_One_Bit_Pos(5, 1) == True",
+        "assert differ_At_One_Bit_Pos(1, 5) == True"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:6"
+  },
+  {
+    "task_id": "A-619",
+    "category": "codegen",
+    "difficulty": "hard",
+    "prompt": "Write a function to move all the numbers to the end of the given string.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert move_num('I1love143you55three3000thousand') == 'Iloveyouthreethousand1143553000'",
+        "assert move_num('Avengers124Assemble') == 'AvengersAssemble124'",
+        "assert move_num('Its11our12path13to14see15things16do17things') == 'Itsourpathtoseethingsdothings11121314151617'"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:619"
+  },
+  {
+    "task_id": "A-733",
+    "category": "codegen",
+    "difficulty": "hard",
+    "prompt": "Write a function to find the index of the first occurrence of a given number in a sorted array.",
+    "tools_available": [
+      "run_python"
+    ],
+    "setup": {
+      "files": {}
+    },
+    "pass_criteria": {
+      "type": "unit_test",
+      "detail": [
+        "assert find_first_occurrence([2, 5, 5, 5, 6, 6, 8, 9, 9, 9], 5) == 1",
+        "assert find_first_occurrence([2, 3, 5, 5, 6, 6, 8, 9, 9, 9], 5) == 2",
+        "assert find_first_occurrence([2, 4, 1, 5, 6, 6, 8, 9, 9, 9], 6) == 4"
+      ]
+    },
+    "source": "mbpp_sanitized_task_id:733"
+  }
+]
