@@ -49,19 +49,37 @@ def get_llm(provider: str, model: str, temperature: float = 0.0, **kwargs):
             **kwargs,
         )
 
-    elif provider == "watsonx":
-        from langchain_ibm import ChatWatsonx
-        return ChatWatsonx(
-            model_id=model,
-            url=kwargs.pop("url", "https://us-south.ml.cloud.ibm.com"),
-            project_id=os.environ.get("WATSONX_PROJECT_ID"),
-            apikey=os.environ.get("WATSONX_API_KEY"),
-            params={"temperature": temperature},
+    elif provider == "anthropic":
+        from langchain_anthropic import ChatAnthropic
+        # Claude Sonnet 5 rejects any non-default temperature/top_p/top_k
+        # with a 400 error (Anthropic deprecated sampling params on this
+        # model generation in favor of adaptive effort control). So unlike
+        # every other provider, we deliberately do NOT pass temperature
+        # here. This is a genuine methodological asymmetry worth noting
+        # in the paper's Threats to Validity section: we can't hold
+        # temperature=0 constant across all four providers, because one
+        # of them no longer accepts the parameter at all.
+        kwargs.pop("temperature", None)
+        return ChatAnthropic(
+            model=model,
+            api_key=os.environ.get("ANTHROPIC_API_KEY"),
             **kwargs,
         )
+
+    # watsonx kept as an optional path, uncomment if credentials come together
+    # elif provider == "watsonx":
+    #     from langchain_ibm import ChatWatsonx
+    #     return ChatWatsonx(
+    #         model_id=model,
+    #         url=kwargs.pop("url", "https://us-south.ml.cloud.ibm.com"),
+    #         project_id=os.environ.get("WATSONX_PROJECT_ID"),
+    #         apikey=os.environ.get("WATSONX_API_KEY"),
+    #         params={"temperature": temperature},
+    #         **kwargs,
+    #     )
 
     else:
         raise ValueError(
             f"Unknown provider '{provider}'. Expected one of: "
-            f"openai, groq, ollama, watsonx"
+            f"openai, groq, ollama, anthropic"
         )

@@ -3,13 +3,17 @@ seed: 42
 
 providers:
   - name: openai
-    model: PLACEHOLDER_MODEL_NAME
+    model: gpt-4o-mini
+    notes: "cheap, mid-tier cloud reference point"
+  - name: anthropic
+    model: claude-sonnet-5
+    notes: "high-capacity cloud, second major vendor alongside OpenAI"
   - name: groq
-    model: PLACEHOLDER_MODEL_NAME
+    model: openai/gpt-oss-120b
+    notes: "large open-weight model (120B), fast cloud inference via Groq LPUs"
   - name: ollama
-    model: PLACEHOLDER_MODEL_NAME
-  - name: watsonx
-    model: PLACEHOLDER_MODEL_NAME
+    model: llama3.2
+    notes: "3B params, genuinely edge-viable, low end of the capacity spread"
 
 task_categories:
   - category_a_codegen
