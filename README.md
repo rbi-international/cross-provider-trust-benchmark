@@ -56,5 +56,28 @@ paper traces back to an exact, reproducible run.
 
 ## Status
 
-Repo scaffold only. See `paper/ISDIA2027_CrossProvider_Trust_Skeleton.md` for
-the six-week build roadmap (Week 1: task suite, through Week 6: submission).
+Weeks 1-5 complete. See `paper/ISDIA2027_CrossProvider_Trust_Skeleton.md` for
+the full six-week roadmap.
+
+- **Week 1** task suite, 4 categories
+- **Week 2** agent scaffold, tools, provider adapters, trajectory + provenance logging
+- **Week 3-4** scoring engine (unit test / state check / LLM judge), harness runner,
+  protocol-adherence detection
+- **Week 5** the four metrics (TSR, ATA, Output Stability, Composite Trust Score),
+  the pre-registered statistics, and generation of every figure and table
+- **Week 6** finish the run grid, then write the paper
+
+`bash scripts/generate_figures.sh` rebuilds `paper/figures/` and `paper/tables/`
+from `experiments/runs/` alone, so every number in the paper traces back to
+real run folders and nothing is hand-copied.
+
+### Known data gap
+
+Categories B (tool orchestration) and C (error recovery) have the full 5
+repeats per task per provider. Categories A (code generation) and D
+(ambiguous instructions) currently have pilot runs only, which is why the
+ANOVA cannot yet fit a Provider x Category interaction term and why RQ6 rests
+on per-category spread for now. Finishing those two categories is the first
+Week 6 task. The analysis reports this limitation itself rather than relying
+on the reader to notice: thin cells are drawn as hollow markers in Fig 6 and
+the omitted interaction term is stated in `paper/tables/stats_summary.txt`.
