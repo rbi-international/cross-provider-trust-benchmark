@@ -1,0 +1,14 @@
+\begin{table}
+\caption{Task Success Rate per provider with 95\% Wilson confidence intervals.}
+\label{tab:table2_tsr_by_provider}
+\begin{tabular}{llrrrrr}
+\toprule
+provider & model & tsr & ci_low & ci_high & n_pass & n_runs \\
+\midrule
+anthropic & claude-sonnet-5 & 0.952 & 0.892 & 0.979 & 99 & 104 \\
+groq & openai/gpt-oss-120b & 0.856 & 0.776 & 0.911 & 89 & 104 \\
+ollama & llama3.2 & 0.222 & 0.154 & 0.309 & 24 & 108 \\
+openai & gpt-4o-mini & 0.779 & 0.690 & 0.848 & 81 & 104 \\
+\bottomrule
+\end{tabular}
+\end{table}

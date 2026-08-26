@@ -1,0 +1,44 @@
+PRE-REGISTERED ANALYSIS OUTPUT
+======================================================================
+
+runs analyzed: 420   tasks: 22   providers: 4
+
+RQ1/RQ6 - two-way ANOVA on per-task success proportions
+----------------------------------------------------------------------
+formula: success_rate ~ C(provider) + C(category)
+NOTE: interaction term omitted - at least one provider x category
+      combination has fewer than 2 scored tasks, so the term is
+      unidentifiable. RQ6 rests on the per-category spread below
+      until categories A and D are fully run.
+
+               sum_sq    df          F        PR(>F)
+C(provider)  7.040606   3.0  24.627941  2.011263e-11
+C(category)  0.644909   3.0   2.255883  8.812164e-02
+Residual     7.718727  81.0        NaN           NaN
+
+partial eta^2: {'C(provider)': 0.477, 'C(category)': 0.0771}
+magnitude:     {'C(provider)': 'large', 'C(category)': 'medium'}
+
+RQ1 - pairwise provider comparisons (Wilcoxon signed-rank, Holm-corrected)
+----------------------------------------------------------------------
+provider_a provider_b  n_paired_tasks  mean_success_a  mean_success_b  median_difference    p_raw  p_adjusted  significant
+ anthropic     ollama              22        0.954545        0.227273                1.0 0.000081    0.000483         True
+      groq     ollama              22        0.869697        0.227273                0.9 0.000209    0.001046         True
+    ollama     openai              22        0.227273        0.754545               -0.7 0.002063    0.008253         True
+ anthropic     openai              22        0.954545        0.754545                0.0 0.011210    0.033629         True
+ anthropic       groq              22        0.954545        0.869697                0.0 0.090889    0.181778        False
+      groq     openai              22        0.869697        0.754545                0.0 0.260711    0.260711        False
+
+RQ5 - does the backend effect concentrate at the edge-viable end?
+----------------------------------------------------------------------
+provider partial eta^2, all providers:            0.4770273766163372
+provider partial eta^2, excluding ollama         0.09375124593469258
+magnitude: large -> medium   attenuation: 0.3832761306816446
+
+RQ6 - provider spread within each task category
+----------------------------------------------------------------------
+          category  n_providers  tsr_min  tsr_max  tsr_range  tsr_std  n_runs
+         ambiguous            4 0.000000 1.000000   1.000000 0.500000       5
+           codegen            4 0.000000 1.000000   1.000000 0.500000       5
+    error_recovery            4 0.076923 0.921569   0.844646 0.368947     205
+tool_orchestration            4 0.346154 0.980392   0.634238 0.299229     205

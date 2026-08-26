@@ -1,0 +1,14 @@
+\begin{table}
+\caption{Task Success Rate by provider and task category, with provider spread per category.}
+\label{tab:table5_tsr_by_category}
+\begin{tabular}{lrrrrrrr}
+\toprule
+category & anthropic & groq & ollama & openai & n_runs_total & tsr_range & tsr_std \\
+\midrule
+ambiguous & 1.000 & 1.000 & 1.000 & 0.000 & 5 & 1.000 & 0.500 \\
+codegen & 1.000 & 1.000 & 0.000 & 1.000 & 5 & 1.000 & 0.500 \\
+error_recovery & 0.922 & 0.765 & 0.077 & 0.667 & 205 & 0.845 & 0.369 \\
+tool_orchestration & 0.980 & 0.941 & 0.346 & 0.902 & 205 & 0.634 & 0.299 \\
+\bottomrule
+\end{tabular}
+\end{table}

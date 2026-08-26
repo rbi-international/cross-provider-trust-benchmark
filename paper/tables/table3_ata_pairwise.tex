@@ -1,0 +1,26 @@
+\begin{table}
+\caption{Pairwise Action Trajectory Agreement with task-level bootstrap 95\% CIs.}
+\label{tab:table3_ata_pairwise}
+\begin{tabular}{llrrrrr}
+\toprule
+provider_a & provider_b & is_self & ata & ci_low & ci_high & n_tasks \\
+\midrule
+anthropic & anthropic & True & 0.858 & 0.803 & 0.910 & 20 \\
+anthropic & groq & False & 0.590 & 0.485 & 0.700 & 22 \\
+anthropic & ollama & False & 0.143 & 0.070 & 0.223 & 22 \\
+anthropic & openai & False & 0.525 & 0.409 & 0.636 & 22 \\
+groq & anthropic & False & 0.590 & 0.485 & 0.700 & 22 \\
+groq & groq & True & 0.761 & 0.635 & 0.877 & 20 \\
+groq & ollama & False & 0.186 & 0.078 & 0.314 & 22 \\
+groq & openai & False & 0.506 & 0.395 & 0.615 & 22 \\
+ollama & anthropic & False & 0.143 & 0.070 & 0.223 & 22 \\
+ollama & groq & False & 0.186 & 0.078 & 0.314 & 22 \\
+ollama & ollama & True & 0.970 & 0.921 & 1.000 & 22 \\
+ollama & openai & False & 0.185 & 0.086 & 0.306 & 22 \\
+openai & anthropic & False & 0.525 & 0.409 & 0.636 & 22 \\
+openai & groq & False & 0.506 & 0.395 & 0.615 & 22 \\
+openai & ollama & False & 0.185 & 0.086 & 0.306 & 22 \\
+openai & openai & True & 0.911 & 0.815 & 0.994 & 20 \\
+\bottomrule
+\end{tabular}
+\end{table}
