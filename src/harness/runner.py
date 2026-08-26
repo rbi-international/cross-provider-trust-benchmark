@@ -11,6 +11,7 @@ Usage:
     python -m src.harness.runner --pilot --providers openai   # single provider only
 """
 import argparse
+import glob
 import json
 import os
 import shutil
@@ -48,6 +49,25 @@ JUDGE_MODEL = "claude-sonnet-5"
 def load_config():
     with open(CONFIG_PATH) as f:
         return yaml.safe_load(f)
+
+
+def completed_cells(runs_dir=RUNS_DIR):
+    """Set of (provider, task_id, run_idx) already scored on disk.
+
+    Run folders are timestamped, so nothing about the layout prevents the same
+    cell being run twice; --resume uses this to skip cells that already have a
+    result.json. Only genuinely completed runs count: a folder whose result is
+    missing or unreadable is treated as not done and will be run again.
+    """
+    done = set()
+    for result_path in glob.glob(os.path.join(runs_dir, "*", "result.json")):
+        try:
+            with open(result_path) as f:
+                result = json.load(f)
+            done.add((result["provider"], result["task_id"], result.get("run_idx", 0)))
+        except Exception:
+            continue
+    return done
 
 
 def load_tasks(category_dirs):
@@ -125,6 +145,7 @@ def run_single(provider_name, model_name, task, run_idx, judge_llm, seed):
             "reason": reason,
             "protocol_adherence": trajectory.get("protocol_adherence"),
             "phantom_tool_call_count": len(trajectory.get("phantom_tool_calls", [])),
+            "degenerate_output_count": len(trajectory.get("degenerate_outputs", [])),
             "elapsed_seconds": round(elapsed, 2),
             "error": error,
         }
@@ -146,6 +167,10 @@ def main():
     parser.add_argument("--full", action="store_true", help="the whole configured grid")
     parser.add_argument("--providers", nargs="*", default=None, help="restrict to these provider names")
     parser.add_argument("--categories", nargs="*", default=None, help="restrict to these category dir names")
+    parser.add_argument("--resume", action="store_true",
+                        help="skip provider/task/repeat cells that already have a result.json")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="print the work plan and exit without calling any model")
     args = parser.parse_args()
 
     if not args.pilot and not args.full:
@@ -173,20 +198,51 @@ def main():
         runs_per_task = config["runs_per_task_provider"]
 
     os.makedirs(RUNS_DIR, exist_ok=True)
-    judge_llm = get_llm(JUDGE_PROVIDER, JUDGE_MODEL)
 
-    print(f"Running {len(tasks)} tasks x {len(provider_configs)} providers x {runs_per_task} repeat(s) "
-          f"= {len(tasks) * len(provider_configs) * runs_per_task} total runs\n")
-
-    all_results = []
+    # Build the work plan up front so the run is countable before it starts,
+    # and so --resume can report exactly what it is skipping. A multi-hour
+    # grid should never be a black box that you can only inspect by watching
+    # it scroll.
+    already_done = completed_cells() if args.resume else set()
+    planned, skipped = [], 0
     for provider_cfg in provider_configs:
         for task in tasks:
             for run_idx in range(runs_per_task):
-                result = run_single(
-                    provider_cfg["name"], provider_cfg["model"], task, run_idx,
-                    judge_llm, config["seed"],
-                )
-                all_results.append(result)
+                if (provider_cfg["name"], task["task_id"], run_idx) in already_done:
+                    skipped += 1
+                    continue
+                planned.append((provider_cfg, task, run_idx))
+
+    total = len(planned) + skipped
+    print(f"Grid: {len(tasks)} tasks x {len(provider_configs)} providers x "
+          f"{runs_per_task} repeat(s) = {total} cells")
+    if args.resume:
+        print(f"Resuming: {skipped} already complete, {len(planned)} to run")
+    by_provider = {}
+    for provider_cfg, _, _ in planned:
+        by_provider[provider_cfg["name"]] = by_provider.get(provider_cfg["name"], 0) + 1
+    for name, count in sorted(by_provider.items()):
+        print(f"  {name:10s} {count} runs")
+    print()
+
+    if args.dry_run:
+        print("Dry run: nothing executed.")
+        return
+
+    if not planned:
+        print("Nothing to do.")
+        return
+
+    judge_llm = get_llm(JUDGE_PROVIDER, JUDGE_MODEL)
+
+    all_results = []
+    for index, (provider_cfg, task, run_idx) in enumerate(planned, start=1):
+        print(f"[{index}/{len(planned)}]", end=" ")
+        result = run_single(
+            provider_cfg["name"], provider_cfg["model"], task, run_idx,
+            judge_llm, config["seed"],
+        )
+        all_results.append(result)
 
     summary_path = os.path.join(RUNS_DIR, f"_summary_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')}.json")
     with open(summary_path, "w") as f:
