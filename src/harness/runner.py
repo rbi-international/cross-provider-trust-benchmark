@@ -33,6 +33,7 @@ from src.agent.scaffold import run_agent
 from src.harness.trajectory_logger import extract_trajectory, save_trajectory
 from src.harness.provenance import record_provenance
 from src.harness.scoring import score_task
+from src.harness.retry import retry_with_backoff
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 CONFIG_PATH = os.path.join(REPO_ROOT, "config", "config.yaml")
@@ -44,6 +45,28 @@ RUNS_DIR = os.path.join(REPO_ROOT, "experiments", "runs")
 # docstring for why this isn't provider-neutral and what that costs us.
 JUDGE_PROVIDER = "anthropic"
 JUDGE_MODEL = "claude-sonnet-5"
+
+
+class RetryingJudge:
+    """
+    Wraps a judge LLM so scoring.py's `judge_llm.invoke(prompt)` call gets
+    retry-with-backoff transparently, with zero changes needed in
+    scoring.py. Only .invoke() is wrapped, since that's the only method
+    score_llm_judge() ever calls (a single one-shot grading call, not an
+    agentic loop), so no other LangChain interface methods need proxying.
+    """
+    def __init__(self, llm):
+        self._llm = llm
+
+    def invoke(self, *args, **kwargs):
+        def _call():
+            return self._llm.invoke(*args, **kwargs)
+
+        def _on_retry(attempt, max_retries, delay, exc):
+            print(f"    [judge retry {attempt}/{max_retries}] {type(exc).__name__}, "
+                  f"waiting {delay}s before retrying...")
+
+        return retry_with_backoff(_call, on_retry=_on_retry)
 
 
 def load_config():
@@ -117,7 +140,13 @@ def run_single(provider_name, model_name, task, run_idx, judge_llm, seed):
         start = time.time()
         error = None
         try:
-            messages = run_agent(llm, prompt)
+            def _on_retry(attempt, max_retries, delay, exc):
+                print(f"    [agent retry {attempt}/{max_retries}] {type(exc).__name__}, "
+                      f"waiting {delay}s before retrying (restarts this run from scratch)...")
+
+            messages = retry_with_backoff(
+                lambda: run_agent(llm, prompt), on_retry=_on_retry,
+            )
             trajectory = extract_trajectory(messages)
         except Exception as e:
             error = f"{type(e).__name__}: {e}"
@@ -233,7 +262,7 @@ def main():
         print("Nothing to do.")
         return
 
-    judge_llm = get_llm(JUDGE_PROVIDER, JUDGE_MODEL)
+    judge_llm = RetryingJudge(get_llm(JUDGE_PROVIDER, JUDGE_MODEL))
 
     all_results = []
     for index, (provider_cfg, task, run_idx) in enumerate(planned, start=1):

@@ -163,7 +163,14 @@ def score_llm_judge(pass_criteria, task_prompt, trajectory, judge_llm):
         tool_calls=json.dumps(trajectory.get("tool_calls", []), indent=2),
     )
     response = judge_llm.invoke(prompt)
-    verdict_text = response.content.strip()
+    content = response.content
+    if isinstance(content, list):
+        verdict_text = "".join(
+            block.get("text", "") if isinstance(block, dict) else str(block)
+            for block in content
+        ).strip()
+    else:
+        verdict_text = content.strip()
     passed = verdict_text.upper().startswith("PASS")
     return passed, verdict_text
 
