@@ -22,7 +22,9 @@ def _read(working_dir, filename):
     path = os.path.join(working_dir, filename)
     if not os.path.exists(path):
         return None
-    with open(path, "r") as f:
+    # Must match the encoding src/agent/tools.py writes with, or the
+    # scorer cannot read back what the agent legitimately produced.
+    with open(path, "r", encoding="utf-8") as f:
         return f.read()
 
 
@@ -105,7 +107,7 @@ def score_state_check(pass_criteria, working_dir):
         try:
             result = subprocess.run(
                 [sys.executable, filename], cwd=working_dir,
-                capture_output=True, text=True, timeout=10,
+                capture_output=True, text=True, timeout=10, encoding="utf-8",
             )
             actual = result.stdout.strip()
             expected = check["exec_and_check_stdout"]

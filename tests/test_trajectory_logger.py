@@ -189,3 +189,40 @@ def test_extract_trajectory_records_degenerate_output_separately():
     assert trajectory["protocol_adherence"] is False
     assert len(trajectory["degenerate_outputs"]) == 1
     assert trajectory["degenerate_outputs"][0]["length"] > 2000
+
+
+# --------------------------------------------------------------------------
+# provider content-shape normalisation
+# --------------------------------------------------------------------------
+
+def test_normalize_content_flattens_anthropic_block_lists():
+    """Anthropic returns content as a list of typed blocks. Passing that
+    straight to a regex raises TypeError, which the harness recorded as an
+    agent failure - a harness bug charged to a provider's score (17 runs in
+    the Week 5 grid)."""
+    from src.harness.trajectory_logger import normalize_content
+
+    assert normalize_content("plain") == "plain"
+    assert normalize_content(None) == ""
+    assert normalize_content([{"type": "text", "text": "hello "},
+                              {"type": "text", "text": "world"}]) == "hello world"
+    assert normalize_content(["a", "b"]) == "ab"
+    # a block with no text must not crash or inject "None"
+    assert normalize_content([{"type": "tool_use", "id": "x"}]) == ""
+
+
+def test_phantom_detection_works_on_block_list_content():
+    """The end-to-end regression: a phantom call delivered as Anthropic-style
+    blocks must be detected, not raise."""
+    messages = [FakeMessage("ai", [
+        {"type": "text", "text": '{"name":"run_python","parameters":'},
+        {"type": "text", "text": '{"code":"d = {1: 2}"}}'},
+    ])]
+    trajectory = extract_trajectory(messages)
+    assert trajectory["protocol_adherence"] is False
+    assert trajectory["phantom_tool_calls"][0]["attempted_tool"] == "run_python"
+
+
+def test_block_list_final_text_is_flattened_not_a_list():
+    messages = [FakeMessage("ai", [{"type": "text", "text": "The answer is 42."}])]
+    assert extract_trajectory(messages)["final_text"] == "The answer is 42."

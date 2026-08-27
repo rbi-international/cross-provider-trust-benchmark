@@ -100,7 +100,7 @@ def load_tasks(category_dirs):
         if not os.path.exists(path):
             print(f"WARNING: {path} not found, skipping category.")
             continue
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             tasks.extend(json.load(f))
     return tasks
 
@@ -130,7 +130,7 @@ def run_single(provider_name, model_name, task, run_idx, judge_llm, seed):
     try:
         # materialize the task's setup files into the sandboxed working dir
         for filename, content in task.get("setup", {}).get("files", {}).items():
-            with open(os.path.join(working_dir, filename), "w") as f:
+            with open(os.path.join(working_dir, filename), "w", encoding="utf-8") as f:
                 f.write(content)
         set_working_dir(working_dir)
 

@@ -110,6 +110,35 @@ def _detect_degenerate_repetition(text):
     }
 
 
+def normalize_content(content):
+    """Flattens a message's content to a plain string.
+
+    Anthropic returns content as a LIST of typed blocks
+    ([{"type": "text", "text": ...}, ...]) rather than a bare string, so
+    handing it straight to a regex raises
+    "TypeError: expected string or bytes-like object, got 'list'".
+    In the Week 5 grid that killed 17 anthropic runs, which were then recorded
+    as agent failures - a harness bug charged to a provider's score.
+
+    Every provider's content passes through here before any text analysis, so
+    the difference in response shape stays a provider-adapter detail and never
+    reaches the metrics.
+    """
+    if content is None:
+        return ""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts = []
+        for block in content:
+            if isinstance(block, dict):
+                parts.append(block.get("text") or block.get("content") or "")
+            elif isinstance(block, str):
+                parts.append(block)
+        return "".join(parts)
+    return str(content)
+
+
 def _detect_phantom_tool_call(text):
     """Returns a dict describing a textual tool-call description, else None.
 
@@ -173,7 +202,10 @@ def extract_trajectory(messages):
 
     for msg in messages:
         msg_tool_calls = getattr(msg, "tool_calls", None)
-        content = getattr(msg, "content", None)
+        # Normalised once, up front: every downstream check is text analysis
+        # and none of them should have to know how a given provider shapes
+        # its content field.
+        content = normalize_content(getattr(msg, "content", None))
 
         if msg_tool_calls:
             for call in msg_tool_calls:
@@ -183,10 +215,9 @@ def extract_trajectory(messages):
                 })
 
         if getattr(msg, "type", None) == "ai":
-            if isinstance(content, str):
-                degenerate = _detect_degenerate_repetition(content)
-                if degenerate:
-                    degenerate_outputs.append(degenerate)
+            degenerate = _detect_degenerate_repetition(content)
+            if degenerate:
+                degenerate_outputs.append(degenerate)
 
             if not msg_tool_calls:
                 phantom = _detect_phantom_tool_call(content)
