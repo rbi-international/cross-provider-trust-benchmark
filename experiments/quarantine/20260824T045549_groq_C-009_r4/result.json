@@ -1,0 +1,15 @@
+{
+  "run_id": "20260824T045549_groq_C-009_r4",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "task_id": "C-009",
+  "category": "error_recovery",
+  "difficulty": "medium",
+  "run_idx": 4,
+  "passed": false,
+  "reason": "FAIL: agent run raised an error: PermissionError: [Errno 13] Permission denied: 'C:\\\\Users\\\\rbhar\\\\AppData\\\\Local\\\\Temp\\\\task_9ra1y0ds\\\\.'",
+  "protocol_adherence": null,
+  "phantom_tool_call_count": 0,
+  "elapsed_seconds": 3.62,
+  "error": "PermissionError: [Errno 13] Permission denied: 'C:\\\\Users\\\\rbhar\\\\AppData\\\\Local\\\\Temp\\\\task_9ra1y0ds\\\\.'"
+}

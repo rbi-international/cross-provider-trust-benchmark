@@ -1,0 +1,16 @@
+{
+  "run_id": "20260828T015755_groq_D-005_r1",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "task_id": "D-005",
+  "category": "ambiguous",
+  "difficulty": "hard",
+  "run_idx": 1,
+  "passed": false,
+  "reason": "FAIL: agent run raised an error: UnicodeEncodeError: 'charmap' codec can't encode character '\\u2011' in position 114: character maps to <undefined>",
+  "protocol_adherence": null,
+  "phantom_tool_call_count": 0,
+  "degenerate_output_count": 0,
+  "elapsed_seconds": 17.56,
+  "error": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2011' in position 114: character maps to <undefined>"
+}

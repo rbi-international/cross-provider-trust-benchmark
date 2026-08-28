@@ -43,6 +43,7 @@ HARNESS_ERROR_TYPES = (
     "TypeError",            # provider content-shape not normalised (fixed in trajectory_logger.py)
     "PermissionError",      # transient file lock on Windows
     "FileNotFoundError",    # working-dir teardown race
+    "RateLimitError",       # sustained provider quota exhaustion after 5 retries, infra, not model behavior
 )
 
 

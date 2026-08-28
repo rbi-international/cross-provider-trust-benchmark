@@ -46,6 +46,39 @@ RUNS_DIR = os.path.join(REPO_ROOT, "experiments", "runs")
 JUDGE_PROVIDER = "anthropic"
 JUDGE_MODEL = "claude-sonnet-5"
 
+# Minimum seconds between the START of consecutive runs on the same
+# provider, a proactive throttle to avoid repeating the 2026-08-28 incident
+# (Groq's 30 req/min AND 8K tokens/min limits both got hit in a sustained
+# burst across 5 back-to-back task runs, well before retry-with-backoff
+# could absorb it). This does NOT pace the individual API calls made
+# *within* one agentic run's ReAct loop, only the gap between separate
+# runs starting, so it reduces but does not eliminate burst risk; the
+# existing retry-with-backoff remains the safety net for whatever slips
+# through within a single run's multi-turn loop.
+# Providers not listed here get no artificial delay.
+PROVIDER_MIN_INTERVAL_SECONDS = {
+    "groq": 8.0,
+}
+_last_call_at = {}
+
+
+def _throttle(provider_name):
+    """Sleeps just long enough to respect PROVIDER_MIN_INTERVAL_SECONDS
+    for this provider, based on when its last run actually started."""
+    min_interval = PROVIDER_MIN_INTERVAL_SECONDS.get(provider_name)
+    if not min_interval:
+        return
+    last = _last_call_at.get(provider_name)
+    now = time.time()
+    if last is not None:
+        elapsed = now - last
+        remaining = min_interval - elapsed
+        if remaining > 0:
+            print(f"    [throttle] waiting {remaining:.1f}s before next {provider_name} run "
+                  f"(min interval {min_interval}s)")
+            time.sleep(remaining)
+    _last_call_at[provider_name] = time.time()
+
 
 class RetryingJudge:
     """
@@ -136,6 +169,8 @@ def run_single(provider_name, model_name, task, run_idx, judge_llm, seed):
 
         llm = get_llm(provider_name, model_name)
         prompt = build_prompt(task)
+
+        _throttle(provider_name)
 
         start = time.time()
         error = None

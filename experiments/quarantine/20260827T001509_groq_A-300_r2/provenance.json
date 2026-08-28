@@ -1,0 +1,21 @@
+{
+  "logged_at_utc": "2026-08-27T00:15:12.654814+00:00",
+  "task_id": "A-300",
+  "provider": "groq",
+  "seed": 42,
+  "git_commit": "c8fc44ee29acb174d0a0a504b978ebdb3fdced14",
+  "python_version": "3.11.15 | packaged by conda-forge | (main, Jun 11 2026, 03:27:10) [MSC v.1944 64 bit (AMD64)]",
+  "package_versions": {
+    "langchain": "1.3.16",
+    "langgraph": "1.2.11",
+    "langchain-openai": "1.6.0",
+    "langchain-groq": "1.1.3",
+    "langchain-ollama": "1.1.0",
+    "langchain-ibm": "1.1.0"
+  },
+  "config_snapshot": {
+    "task_id": "A-300",
+    "provider": "groq",
+    "model": "openai/gpt-oss-120b"
+  }
+}
