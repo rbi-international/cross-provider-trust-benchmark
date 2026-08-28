@@ -57,7 +57,7 @@ JUDGE_MODEL = "claude-sonnet-5"
 # through within a single run's multi-turn loop.
 # Providers not listed here get no artificial delay.
 PROVIDER_MIN_INTERVAL_SECONDS = {
-    "groq": 8.0,
+    "groq": 20.0,
 }
 _last_call_at = {}
 
