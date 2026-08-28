@@ -1,43 +1,41 @@
 PRE-REGISTERED ANALYSIS OUTPUT
 ======================================================================
 
-runs analyzed: 1212   tasks: 60   providers: 4
+runs analyzed: 1211   tasks: 60   providers: 4
 
 RQ1/RQ6 - two-way ANOVA on per-task success proportions
 ----------------------------------------------------------------------
 formula: success_rate ~ C(provider) * C(category)
 
-                            sum_sq  ...        PR(>F)
-C(provider)              19.515463  ...  3.396899e-27
-C(category)               1.058759  ...  2.908575e-02
-C(provider):C(category)   1.091537  ...  4.001400e-01
-Residual                 25.838667  ...           NaN
+                            sum_sq     df          F        PR(>F)
+C(provider)              18.635167    3.0  49.967409  9.157121e-25
+C(category)               1.325426    3.0   3.553931  1.518082e-02
+C(provider):C(category)   0.877167    9.0   0.783997  6.313979e-01
+Residual                 27.846667  224.0        NaN           NaN
 
-[4 rows x 4 columns]
-
-partial eta^2: {'C(provider)': 0.4303, 'C(category)': 0.0394, 'C(provider):C(category)': 0.0405}
+partial eta^2: {'C(provider)': 0.4009, 'C(category)': 0.0454, 'C(provider):C(category)': 0.0305}
 magnitude:     {'C(provider)': 'large', 'C(category)': 'small', 'C(provider):C(category)': 'small'}
 
 RQ1 - pairwise provider comparisons (Wilcoxon signed-rank, Holm-corrected)
 ----------------------------------------------------------------------
 provider_a provider_b  n_paired_tasks  mean_success_a  mean_success_b  median_difference        p_raw   p_adjusted  significant
- anthropic     ollama              60        0.886667        0.155556                1.0 1.186765e-10 7.120589e-10         True
-    ollama     openai              60        0.155556        0.793333               -1.0 1.134103e-09 5.670516e-09         True
-      groq     ollama              60        0.718889        0.155556                0.8 3.133793e-08 1.253517e-07         True
- anthropic       groq              60        0.886667        0.718889                0.0 2.329094e-03 6.987282e-03         True
- anthropic     openai              60        0.886667        0.793333                0.0 8.443691e-02 1.688738e-01        False
-      groq     openai              60        0.718889        0.793333                0.0 2.461695e-01 2.461695e-01        False
+ anthropic     ollama              60        0.896667        0.163333                1.0 1.212378e-10 7.274266e-10         True
+    ollama     openai              60        0.163333        0.773333               -1.0 1.681626e-09 8.408128e-09         True
+      groq     ollama              60        0.665556        0.163333                0.7 5.868142e-07 2.347257e-06         True
+ anthropic       groq              60        0.896667        0.665556                0.0 7.538332e-05 2.261500e-04         True
+ anthropic     openai              60        0.896667        0.773333                0.0 4.372305e-03 8.744611e-03         True
+      groq     openai              60        0.665556        0.773333                0.0 1.199360e-01 1.199360e-01        False
 
 RQ5 - does the backend effect concentrate at the edge-viable end?
 ----------------------------------------------------------------------
-provider partial eta^2, all providers:            0.4302907612235088
-provider partial eta^2, excluding ollama         0.042360004538660005
-magnitude: large -> small   attenuation: 0.3879307566848488
+provider partial eta^2, all providers:            0.40091290145612374
+provider partial eta^2, excluding ollama         0.07261234166255105
+magnitude: large -> medium   attenuation: 0.3283005597935727
 
 RQ6 - provider spread within each task category
 ----------------------------------------------------------------------
           category  n_providers  tsr_min  tsr_max  tsr_range  tsr_std  n_runs
     error_recovery            4 0.076923 0.921569   0.844646 0.368947     205
            codegen            4 0.125828 0.893333   0.767506 0.342078     601
-         ambiguous            4 0.156863 0.840000   0.683137 0.320878     201
 tool_orchestration            4 0.346154 0.980392   0.634238 0.299229     205
+         ambiguous            4 0.200000 0.800000   0.600000 0.260000     200

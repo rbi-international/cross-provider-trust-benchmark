@@ -31,13 +31,31 @@ def _resolve(filename: str) -> str:
     return os.path.join(_WORKING_DIR["path"], safe_name)
 
 
+# Every file this tool set touches is opened as UTF-8 EXPLICITLY.
+#
+# Without this, Python on Windows falls back to the locale encoding (cp1252),
+# which cannot represent characters models emit routinely - a non-breaking
+# hyphen, a curly quote, an en-dash. The write then raises UnicodeEncodeError,
+# the harness records the run as an agent failure, and a provider gets
+# penalised for a property of the machine the benchmark happened to run on.
+# In the Week 5 grid this silently invalidated 54 runs, all groq, concentrated
+# in codegen - enough to visibly depress one provider's score.
+#
+# Encoding must be pinned rather than inherited, or the benchmark is not
+# portable across operating systems and its numbers are not comparable.
+#
+# This fix has been lost once already, to an unrelated edit that rewrote this
+# file from a pre-fix copy. tests/test_tools_encoding.py now guards it.
+_ENCODING = "utf-8"
+
+
 @tool
 def read_file(filename: str) -> str:
     """Read and return the full text contents of a file in the working directory."""
     path = _resolve(filename)
     if not os.path.exists(path):
         return f"ERROR: {filename} does not exist in the working directory."
-    with open(path, "r") as f:
+    with open(path, "r", encoding=_ENCODING) as f:
         return f.read()
 
 
@@ -45,7 +63,7 @@ def read_file(filename: str) -> str:
 def write_file(filename: str, content: str) -> str:
     """Write text content to a file in the working directory, overwriting it if it exists."""
     path = _resolve(filename)
-    with open(path, "w") as f:
+    with open(path, "w", encoding=_ENCODING) as f:
         f.write(content)
     return f"Wrote {len(content)} characters to {filename}."
 
