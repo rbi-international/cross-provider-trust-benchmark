@@ -7,35 +7,37 @@ RQ1/RQ6 - two-way ANOVA on per-task success proportions
 ----------------------------------------------------------------------
 formula: success_rate ~ C(provider) * C(category)
 
-                            sum_sq     df          F        PR(>F)
-C(provider)              19.031852    3.0  54.199741  2.226460e-26
-C(category)               1.090148    3.0   3.104572  2.741697e-02
-C(provider):C(category)   1.436815    9.0   1.363941  2.057465e-01
-Residual                 26.218667  224.0        NaN           NaN
+                            sum_sq  ...        PR(>F)
+C(provider)              19.515463  ...  3.396899e-27
+C(category)               1.058759  ...  2.908575e-02
+C(provider):C(category)   1.091537  ...  4.001400e-01
+Residual                 25.838667  ...           NaN
 
-partial eta^2: {'C(provider)': 0.4206, 'C(category)': 0.0399, 'C(provider):C(category)': 0.052}
+[4 rows x 4 columns]
+
+partial eta^2: {'C(provider)': 0.4303, 'C(category)': 0.0394, 'C(provider):C(category)': 0.0405}
 magnitude:     {'C(provider)': 'large', 'C(category)': 'small', 'C(provider):C(category)': 'small'}
 
 RQ1 - pairwise provider comparisons (Wilcoxon signed-rank, Holm-corrected)
 ----------------------------------------------------------------------
 provider_a provider_b  n_paired_tasks  mean_success_a  mean_success_b  median_difference        p_raw   p_adjusted  significant
- anthropic     ollama              60        0.870000        0.155556                1.0 1.880456e-10 1.128274e-09         True
+ anthropic     ollama              60        0.886667        0.155556                1.0 1.186765e-10 7.120589e-10         True
     ollama     openai              60        0.155556        0.793333               -1.0 1.134103e-09 5.670516e-09         True
       groq     ollama              60        0.718889        0.155556                0.8 3.133793e-08 1.253517e-07         True
- anthropic       groq              60        0.870000        0.718889                0.0 7.656130e-03 2.296839e-02         True
- anthropic     openai              60        0.870000        0.793333                0.0 1.713149e-01 3.426297e-01        False
-      groq     openai              60        0.718889        0.793333                0.0 2.461695e-01 3.426297e-01        False
+ anthropic       groq              60        0.886667        0.718889                0.0 2.329094e-03 6.987282e-03         True
+ anthropic     openai              60        0.886667        0.793333                0.0 8.443691e-02 1.688738e-01        False
+      groq     openai              60        0.718889        0.793333                0.0 2.461695e-01 2.461695e-01        False
 
 RQ5 - does the backend effect concentrate at the edge-viable end?
 ----------------------------------------------------------------------
-provider partial eta^2, all providers:            0.4205885915774244
-provider partial eta^2, excluding ollama         0.03385301646408875
-magnitude: large -> small   attenuation: 0.3867355751133357
+provider partial eta^2, all providers:            0.4302907612235088
+provider partial eta^2, excluding ollama         0.042360004538660005
+magnitude: large -> small   attenuation: 0.3879307566848488
 
 RQ6 - provider spread within each task category
 ----------------------------------------------------------------------
           category  n_providers  tsr_min  tsr_max  tsr_range  tsr_std  n_runs
     error_recovery            4 0.076923 0.921569   0.844646 0.368947     205
            codegen            4 0.125828 0.893333   0.767506 0.342078     601
-         ambiguous            4 0.156863 0.840000   0.683137 0.313704     201
+         ambiguous            4 0.156863 0.840000   0.683137 0.320878     201
 tool_orchestration            4 0.346154 0.980392   0.634238 0.299229     205

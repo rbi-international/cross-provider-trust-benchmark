@@ -31,28 +31,13 @@ def _resolve(filename: str) -> str:
     return os.path.join(_WORKING_DIR["path"], safe_name)
 
 
-# Every file this tool set touches is opened as UTF-8 EXPLICITLY.
-#
-# Without this, Python on Windows falls back to the locale encoding (cp1252),
-# which cannot represent characters models emit routinely - a non-breaking
-# hyphen (‑), a curly quote, an en-dash. The write then raises
-# UnicodeEncodeError, the harness records the run as an agent failure, and a
-# provider gets penalised for a property of the machine the benchmark happened
-# to run on. In the Week 5 grid this silently invalidated 54 runs, all groq,
-# concentrated in codegen - enough to visibly depress one provider's score.
-#
-# Encoding must therefore be pinned rather than inherited, or the benchmark is
-# not portable across operating systems and its numbers are not comparable.
-_ENCODING = "utf-8"
-
-
 @tool
 def read_file(filename: str) -> str:
     """Read and return the full text contents of a file in the working directory."""
     path = _resolve(filename)
     if not os.path.exists(path):
         return f"ERROR: {filename} does not exist in the working directory."
-    with open(path, "r", encoding=_ENCODING) as f:
+    with open(path, "r") as f:
         return f.read()
 
 
@@ -60,7 +45,7 @@ def read_file(filename: str) -> str:
 def write_file(filename: str, content: str) -> str:
     """Write text content to a file in the working directory, overwriting it if it exists."""
     path = _resolve(filename)
-    with open(path, "w", encoding=_ENCODING) as f:
+    with open(path, "w") as f:
         f.write(content)
     return f"Wrote {len(content)} characters to {filename}."
 
@@ -84,6 +69,19 @@ def run_python(code: str) -> str:
 
 
 @tool
+def list_files() -> str:
+    """List all files currently in the working directory. Use this to check
+    whether relevant files already exist before assuming information is
+    missing or asking the user for it."""
+    if _WORKING_DIR["path"] is None:
+        raise RuntimeError("set_working_dir() must be called before tool use")
+    files = os.listdir(_WORKING_DIR["path"])
+    if not files:
+        return "The working directory is empty, no files exist."
+    return "Files in the working directory: " + ", ".join(sorted(files))
+
+
+@tool
 def calculator(expression: str) -> str:
     """Evaluate a simple arithmetic expression (e.g. '100 * 0.92') and return the result."""
     try:
@@ -96,5 +94,5 @@ def calculator(expression: str) -> str:
         return f"ERROR: {type(e).__name__}: {e}"
 
 
-ALL_TOOLS = [read_file, write_file, run_python, calculator]
+ALL_TOOLS = [read_file, write_file, run_python, calculator, list_files]
 TOOLS_BY_NAME = {t.name: t for t in ALL_TOOLS}
