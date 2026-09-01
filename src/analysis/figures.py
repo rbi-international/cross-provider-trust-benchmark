@@ -301,7 +301,7 @@ def figure_2_architecture(frame):
         0.04, scaffold_bottom, 0.92,
         ["FIXED AGENT SCAFFOLD",
          "identical system prompt  ·  identical ReAct loop",
-         "identical tool set: read_file, write_file, run_python, calculator"],
+         "identical tool set: read_file, write_file, run_python, calculator, list_files"],
         [8.5, 7.5, 7.5], ["bold", "normal", "normal"], "#f4f4f2", TEXT_SECONDARY,
     )
     for i in range(len(providers)):
